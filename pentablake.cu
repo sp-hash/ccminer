@@ -576,7 +576,9 @@ extern "C" int scanhash_pentablake(int thr_id, uint32_t *pdata, const uint32_t *
 			}
 		}
 
-		pdata[19] += throughput;
+		if (pdata[19] + throughput < pdata[19])
+			pdata[19] = max_nonce;
+		else pdata[19] += throughput;
 
 	} while (pdata[19] < max_nonce && !work_restart[thr_id].restart);
 

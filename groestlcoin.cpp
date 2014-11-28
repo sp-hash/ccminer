@@ -102,8 +102,8 @@ extern "C" int scanhash_groestlcoin(int thr_id, uint32_t *pdata, const uint32_t 
             groestlhash(tmpHash, endiandata);
 
             if (tmpHash[7] <= Htarg && fulltest(tmpHash, ptarget)) {
+				*hashes_done = pdata[19] + throughPut - start_nonce;
                 pdata[19] = foundNounce;
-                *hashes_done = foundNounce - start_nonce + 1;
                 free(outputHash);
                 return true;
             } else {

@@ -124,15 +124,17 @@ extern "C" int scanhash_qubit(int thr_id, uint32_t *pdata,
 
 			if (vhash64[7] <= Htarg && fulltest(vhash64, ptarget) )
 			{
+				*hashes_done = pdata[19] + throughput - first_nonce;
 				pdata[19] = foundNonce;
-				*hashes_done = foundNonce - first_nonce + 1;
 				return 1;
 			} else {
 				applog(LOG_INFO, "GPU #%d: result for nonce $%08X does not validate on CPU!", thr_id, foundNonce);
 			}
 		}
 
-		pdata[19] += throughput;
+		if (pdata[19] + throughput < pdata[19])
+			pdata[19] = max_nonce;
+		else pdata[19] += throughput;
 
 	} while (pdata[19] < max_nonce && !work_restart[thr_id].restart);
 

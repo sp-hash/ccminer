@@ -113,8 +113,8 @@ extern "C" int scanhash_nist5(int thr_id, uint32_t *pdata,
 
 			if ((vhash64[7]<=Htarg) && fulltest(vhash64, ptarget)) {
 
+				*hashes_done = pdata[19] + throughput - first_nonce;
 				pdata[19] = foundNonce;
-				*hashes_done = foundNonce - first_nonce + 1;
 				quark_skein512_cpu_free(thr_id);
 				if (opt_benchmark) applog(LOG_INFO, "Found nounce", thr_id, foundNonce, vhash64[7], Htarg);
 				return 1;
@@ -123,7 +123,7 @@ extern "C" int scanhash_nist5(int thr_id, uint32_t *pdata,
 			}
 		}
 		if (pdata[19] + throughput < pdata[19])
-			 pdata[19] = max_nonce;
+			pdata[19] = max_nonce;
 		else pdata[19] += throughput;
 
 	} while (pdata[19] < max_nonce && !work_restart[thr_id].restart);

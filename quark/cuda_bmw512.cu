@@ -128,7 +128,7 @@ __device__ __forceinline__ void Compression512_64_first(const uint64_t *const __
 		(SHR(q[0 + 14], 2) ^ SHL(q[0 + 14], 2) ^ ROTL64(q[0 + 14], 28) ^ ROTL64(q[0 + 14], 59)) +
 		(SHR(q[0 + 15], 1) ^ SHL(q[0 + 15], 3) ^ ROTL64(q[0 + 15], 4) ^ ROTL64(q[0 + 15], 37)) +
 		((((0 + 16)*(0x0555555555555555ull)) + ROTL64(msg[0], 0 + 1) +
-		ROTL64(msg[0 + 3], 0 + 4) - ROTL64(msg[0 + 10], 0 + 11)) ^ h_c[0 + 7]);
+		ROTL64(msg[0 + 3], 0 + 4) ) ^ h_c[0 + 7]);
 	q[1 + 16] =
 		(SHR(q[1], 1) ^ SHL(q[1], 2) ^ ROTL64(q[1], 13) ^ ROTL64(q[1], 43)) +
 		(SHR(q[1 + 1], 2) ^ SHL(q[1 + 1], 1) ^ ROTL64(q[1 + 1], 19) ^ ROTL64(q[1 + 1], 53)) +
@@ -147,7 +147,7 @@ __device__ __forceinline__ void Compression512_64_first(const uint64_t *const __
 		(SHR(q[1 + 14], 2) ^ SHL(q[1 + 14], 2) ^ ROTL64(q[1 + 14], 28) ^ ROTL64(q[1 + 14], 59)) +
 		(SHR(q[1 + 15], 1) ^ SHL(q[1 + 15], 3) ^ ROTL64(q[1 + 15], 4) ^ ROTL64(q[1 + 15], 37)) +
 		((((1 + 16)*(0x0555555555555555ull)) + ROTL64(msg[1], 1 + 1) +
-		ROTL64(msg[1 + 3], 1 + 4) - ROTL64(msg[1 + 10], 1 + 11)) ^ h_c[1 + 7]);
+		ROTL64(msg[1 + 3], 1 + 4) ) ^ h_c[1 + 7]);
 
 	q[2 + 16] = q[2 + 0] + ROTL64(q[2 + 1], 5) + q[2 + 2] + ROTL64(q[2 + 3], 11) + \
 		q[2 + 4] + ROTL64(q[2 + 5], 27) + q[2 + 6] + SWAPDWORDS(q[2 + 7]) + \
@@ -163,7 +163,7 @@ __device__ __forceinline__ void Compression512_64_first(const uint64_t *const __
 		ROTL64(msg[3 + 3], 3 + 4) - ROTL64(msg[3 + 10], 3 + 11)) ^ h_c[3 + 7]);
 	q[4 + 16] = CONST_EXP2(4) +
 		((((4 + 16)*(0x0555555555555555ull)) + ROTL64(msg[4], 4 + 1) +
-		ROTL64(msg[4 + 3], 4 + 4) - ROTL64(msg[4 + 10], 4 + 11)) ^ h_c[4 + 7]);
+		ROTL64(msg[4 + 3], 4 + 4) ) ^ h_c[4 + 7]);
 
 
 	q[21] = q[5] + ROTL64(q[6], 5) + q[7] + ROTL64(q[8], 11) + 
@@ -180,31 +180,31 @@ __device__ __forceinline__ void Compression512_64_first(const uint64_t *const __
 		((((7 + 16)*(0x0555555555555555ull)) + ROTL64(msg[7], 7 + 1) -
 		ROTL64(msg[7 - 6], (7 - 6) + 1)) ^ h_c[7 + 7]);
 	q[8 + 16] = CONST_EXP2(8) +
-		((((8 + 16)*(0x0555555555555555ull)) + ROTL64(msg[8], 8 + 1) -
+		((((8 + 16)*(0x0555555555555555ull)) + 0x0000000000010000ULL -
 		ROTL64(msg[8 - 6], (8 - 6) + 1)) ^ h_c[8 + 7]);
 
 	q[9 + 16] = CONST_EXP2(9) +
-		((((9 + 16)*(0x0555555555555555ull)) +
-		ROTL64(msg[9 + 3], 9 + 4) - ROTL64(msg[9 - 6], (9 - 6) + 1)) ^ h_c[9 - 9]);
+		((((9 + 16)*(0x0555555555555555ull)) -
+		ROTL64(msg[9 - 6], (9 - 6) + 1)) ^ h_c[9 - 9]);
 	q[10 + 16] = CONST_EXP2(10) +
-		((((10 + 16)*(0x0555555555555555ull)) +
-		ROTL64(msg[10 + 3], 10 + 4) - ROTL64(msg[10 - 6], (10 - 6) + 1)) ^ h_c[10 - 9]);
+		((((10 + 16)*(0x0555555555555555ull)) -
+		ROTL64(msg[10 - 6], (10 - 6) + 1)) ^ h_c[10 - 9]);
 	q[11 + 16] = CONST_EXP2(11) +
-		((((11 + 16)*(0x0555555555555555ull)) +
-		ROTL64(msg[11 + 3], 11 + 4) - ROTL64(msg[11 - 6], (11 - 6) + 1)) ^ h_c[11 - 9]);
+		((((11 + 16)*(0x0555555555555555ull)) -
+		ROTL64(msg[11 - 6], (11 - 6) + 1)) ^ h_c[11 - 9]);
 	q[12 + 16] = CONST_EXP2(12) +
 		((((12 + 16)*(0x0555555555555555ull)) +
-		ROTL64(msg[12 + 3], 12 + 4) - ROTL64(msg[12 - 6], (12 - 6) + 1)) ^ h_c[12 - 9]);
+		0x0000000002000000ull - ROTL64(msg[12 - 6], (12 - 6) + 1)) ^ h_c[12 - 9]);
 
 	q[13 + 16] = CONST_EXP2(13) +
-		((((13 + 16)*(0x0555555555555555ull)) + ROTL64(msg[13], 13 + 1) +
+		((((13 + 16)*(0x0555555555555555ull)) +
 		ROTL64(msg[13 - 13], (13 - 13) + 1) - ROTL64(msg[13 - 6], (13 - 6) + 1)) ^ h_c[13 - 9]);
 	q[14 + 16] = CONST_EXP2(14) +
-		((((14 + 16)*(0x0555555555555555ull)) + ROTL64(msg[14], 14 + 1) +
-		ROTL64(msg[14 - 13], (14 - 13) + 1) - ROTL64(msg[14 - 6], (14 - 6) + 1)) ^ h_c[14 - 9]);
+		((((14 + 16)*(0x0555555555555555ull)) +
+		ROTL64(msg[14 - 13], (14 - 13) + 1) - 0x0000000000010000ull) ^ h_c[14 - 9]);
 	q[15 + 16] = CONST_EXP2(15) +
-		((((15 + 16)*(0x0555555555555555ull)) + ROTL64(msg[15], 15 + 1) +
-		ROTL64(msg[15 - 13], (15 - 13) + 1) - ROTL64(msg[15 - 6], (15 - 6) + 1)) ^ h_c[15 - 9]);
+		((((15 + 16)*(0x0555555555555555ull)) + ROTL64(512ULL, 15 + 1) +
+		ROTL64(msg[15 - 13], (15 - 13) + 1)) ^ h_c[15 - 9]);
 
 	uint64_t XL64 = q[16] ^ q[17] ^ q[18] ^ q[19] ^ q[20] ^ q[21] ^ q[22] ^ q[23];
 	uint64_t XH64 = XL64^q[24] ^ q[25] ^ q[26] ^ q[27] ^ q[28] ^ q[29] ^ q[30] ^ q[31];
@@ -392,14 +392,6 @@ void quark_bmw512_gpu_hash_64(int threads, uint32_t startNounce, uint64_t *g_has
 #pragma unroll 8
         for(int i=0;i<8;i++)
             message[i] = inpHash[i];
-#pragma unroll 6
-        for(int i=9;i<15;i++)
-            message[i] = 0;
-
-        // Padding einfügen (Byteorder?!?)
-        message[8] = SPH_C64(0x80);
-        // Länge (in Bits, d.h. 64 Byte * 8 = 512 Bits
-        message[15] = SPH_C64(512);
 
         // Compression 1
         Compression512_64_first(message, h);
