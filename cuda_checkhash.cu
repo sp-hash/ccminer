@@ -30,7 +30,7 @@ void cuda_check_gpu_hash_64(int threads, uint32_t startNounce, uint32_t *g_nonce
 			if (hash[i] > pTarget[i]) {
 				return;
 			}
-			if (hash[i] <= pTarget[i]) {
+			if (hash[i] < pTarget[i]) {
 				break;
 			}
 		}

@@ -62,29 +62,9 @@ void groestlcoin_gpu_hash_quad(int threads, uint32_t startNounce, uint32_t *resN
         
         if (threadIdx.x % 4 == 0)
         {
-            int i, position = -1;
-            bool rc = true;
-
-    #pragma unroll 8
-            for (i = 7; i >= 0; i--) {
-                if (out_state[i] > pTarget[i]) {
-                    if(position < i) {
-                        position = i;
-                        rc = false;
-                    }
-                 }
-                 if (out_state[i] < pTarget[i]) {
-                    if(position < i) {
-                        position = i;
-                        rc = true;
-                    }
-                 }
-            }
-
-            if(rc == true)
-                if(resNounce[0] > nounce)
-                    resNounce[0] = nounce;
-        }
+			if (cuda_hashisbelowtarget(out_state, pTarget))
+				resNounce[0] = nounce;
+		}
     }
 }
 

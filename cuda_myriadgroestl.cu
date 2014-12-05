@@ -268,7 +268,7 @@ __global__ void
 
         myriadgroestl_gpu_sha256(out_state);        
 		if (cuda_hashisbelowtarget(out_state, pTarget)) resNounce[0] = nounce;		
-    }
+	}
 }
 
 // Setup-Funktionen
