@@ -485,9 +485,9 @@ extern uint32_t opt_work_size;
 extern uint64_t global_hashrate;
 extern double   global_diff;
 
-extern char* device_name[8];
-extern short device_map[8];
-extern long  device_sm[8];
+extern char* device_name[16];
+extern int device_map[16];
+extern long  device_sm[16];
 
 #define CL_N    "\x1B[0m"
 #define CL_RED  "\x1B[31m"
