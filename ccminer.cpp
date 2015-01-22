@@ -1443,14 +1443,41 @@ static void *miner_thread(void *userdata)
 
 		if (check_dups)
 			hashlog_remember_scan_range(&work);
+		
+		#ifdef USE_WRAPNVML
+            if (hnvml != NULL) {
+                unsigned int tempC=0, fanpcnt=0, mwatts=0;
+                char gputempbuf[64], gpufanbuf[64], gpupowbuf[64]; 
+                strcpy(gputempbuf, " N/A");
+                strcpy(gpufanbuf, " N/A");
+                strcpy(gpupowbuf, " N/A");
 
-		/* output */
-		if (!opt_quiet && (loopcnt > 0)) {
-			sprintf(s, thr_hashrates[thr_id] >= 1e6 ? "%.0f" : "%.2f",
-				1e-3 * thr_hashrates[thr_id]);
-			applog(LOG_INFO, "GPU #%d: %s, %s kH/s",
-				device_map[thr_id], device_name[device_map[thr_id]], s);
-		}
+                if (nvml_get_tempC(hnvml, device_map[thr_id], &tempC) == 0)
+                    sprintf(gputempbuf, "%3dC", tempC);
+                if (nvml_get_fanpcnt(hnvml, device_map[thr_id], &fanpcnt) == 0)
+                    sprintf(gpufanbuf, "%3d%%", fanpcnt);
+                //if (nvml_get_power_usage(hnvml, device_map[thr_id], &mwatts) == 0)
+                //    sprintf(gpupowbuf, "%dW", (mwatts / 1000));
+
+                if (!opt_quiet && (loopcnt > 0)) {
+                sprintf(s, thr_hashrates[thr_id] >= 1e6 ? "%.0f" : "%.2f",
+                    1e-3 * thr_hashrates[thr_id]);
+                applog(LOG_INFO, "GPU #%d: %s, %s kH/s",
+                    device_map[thr_id], device_name[device_map[thr_id]], s);
+                applog(LOG_INFO, "        Temp: %s  Fan speed: %s",//  Power: %s",
+                    gputempbuf, gpufanbuf); //, gpupowbuf);
+                }
+            }
+        #else
+
+            /* output */
+            if (!opt_quiet && (loopcnt > 0)) {
+                sprintf(s, thr_hashrates[thr_id] >= 1e6 ? "%.0f" : "%.2f",
+                    1e-3 * thr_hashrates[thr_id]);
+                applog(LOG_INFO, "GPU #%d: %s, %s kH/s",
+                    device_map[thr_id], device_name[device_map[thr_id]], s);
+            }
+        #endif
 
 		/* loopcnt: ignore first loop hashrate */
 		if ((loopcnt>0) && thr_id == (opt_n_threads - 1)) {
