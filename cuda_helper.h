@@ -65,7 +65,7 @@ __device__ __forceinline__ uint64_t MAKE_ULONGLONG(uint32_t LO, uint32_t HI)
 	return result;
 }
 
-__device__ __forceinline__ uint64_t REPLACE_HIWORD(const uint64_t &x, const uint32_t y) 
+__device__ __forceinline__ uint64_t REPLACE_HIWORD(const uint64_t x, const uint32_t y) 
 {
 	uint32_t t,t2=0;
 	asm("mov.b64 {%0,%1},%2; \n\t"
@@ -75,7 +75,7 @@ __device__ __forceinline__ uint64_t REPLACE_HIWORD(const uint64_t &x, const uint
 	return x;
 
 }
-__device__ __forceinline__ uint64_t REPLACE_LOWORD(const uint64_t &x, const uint32_t y) 
+__device__ __forceinline__ uint64_t REPLACE_LOWORD(const uint64_t x, const uint32_t y) 
 {
 	uint32_t t,t2;
 	asm("mov.b64 {%0,%1},%2; \n\t"
@@ -85,7 +85,7 @@ __device__ __forceinline__ uint64_t REPLACE_LOWORD(const uint64_t &x, const uint
 	return x;
 }
 
-// Endian Drehung für 32 Bit Typen
+// Endian Drehung fÃ¼r 32 Bit Typen
 #ifdef __CUDA_ARCH__
 __device__ __forceinline__ uint32_t cuda_swab32(uint32_t x)
 {
