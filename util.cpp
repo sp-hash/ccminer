@@ -1621,9 +1621,9 @@ void print_hash_tests(void)
 
 	printf(CL_WHT "CPU HASH ON EMPTY BUFFER RESULTS:" CL_N "\n");
 
-	memset(hash, 0, sizeof hash);
-	animehash(&hash[0], &buf[0]);
-	printpfx("anime", hash);
+//	memset(hash, 0, sizeof hash);
+//	animehash(&hash[0], &buf[0]);
+//	printpfx("anime", hash);
 
 	memset(hash, 0, sizeof hash);
 	blake256hash(&hash[0], &buf[0], 8);
