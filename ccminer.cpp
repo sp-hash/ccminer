@@ -39,9 +39,7 @@
 #endif
 #endif
 
-//#include "nvml.h"
 #include "cuda_runtime.h"
-//#include "gpu_utils.h"
 #include "miner.h"
 
 #ifdef WIN32
@@ -488,10 +486,8 @@ void proper_exit(int reason)
 
 	if (reason != CCEXIT_SIG) {
 #ifdef USE_WRAPNVML
-		#ifndef WIN32
 			if (hnvml)
 				nvml_destroy(hnvml);
-		#endif
 #endif
 
 		free(opt_syslog_pfx);
