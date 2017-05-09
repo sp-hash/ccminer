@@ -132,7 +132,7 @@ __device__ __forceinline__ uint64_t REPLACE_LOWORD(const uint64_t x, const uint3
 	return result;
 }
 
-// Endian Drehung für 32 Bit Typen
+// Endian Drehung fÃ¼r 32 Bit Typen
 #ifdef __CUDA_ARCH__
 __device__ __forceinline__ uint32_t cuda_swab32(const uint32_t x)
 {
