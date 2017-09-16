@@ -579,9 +579,7 @@ static __device__ __forceinline__ uint2 operator& (uint2 a, uint2 b) { return ma
 static __device__ __forceinline__ uint2 operator| (uint2 a, uint2 b) { return make_uint2(a.x | b.x, a.y | b.y); }
 static __device__ __forceinline__ uint2 operator~ (uint2 a) { return make_uint2(~a.x, ~a.y); }
 static __device__ __forceinline__ void operator^= (uint2 &a, uint2 b) { a = a ^ b; }
-
-
-/*static __device__ __forceinline__ uint2 operator+ (uint2 a, uint2 b)
+static __device__ __forceinline__ uint2 operator+ (uint2 a, uint2 b)
 {
 	uint2 result;
 	asm(
@@ -590,12 +588,6 @@ static __device__ __forceinline__ void operator^= (uint2 &a, uint2 b) { a = a ^ 
 		: "=r"(result.x), "=r"(result.y) : "r"(a.x), "r"(a.y), "r"(b.x), "r"(b.y));
 	return result;
 }
-*/
-static __device__ __forceinline__ uint2 operator+ (uint2 a, uint2 b)
-{
-	return vectorize(devectorize(a) + devectorize(b));
-}
-
 
 static __device__ __forceinline__ uint2 operator+ (uint2 a, uint32_t b)
 {
@@ -606,7 +598,7 @@ static __device__ __forceinline__ uint2 operator+ (uint2 a, uint32_t b)
 	return result;
 }
 
-/**/
+
 static __device__ __forceinline__ uint2 operator- (uint2 a, uint32_t b)
 {
 	uint2 result;
@@ -616,7 +608,7 @@ static __device__ __forceinline__ uint2 operator- (uint2 a, uint32_t b)
 	return result;
 }
 
-/*
+
 static __device__ __forceinline__ uint2 operator- (uint2 a, uint2 b)
 {
 	uint2 result;
@@ -625,12 +617,7 @@ static __device__ __forceinline__ uint2 operator- (uint2 a, uint2 b)
 		: "=r"(result.x), "=r"(result.y) : "r"(a.x), "r"(a.y), "r"(b.x), "r"(b.y));
 	return result;
 }
-*/
 
-static __device__ __forceinline__ uint2 operator- (uint2 a, uint2 b)
-{
-	return vectorize(devectorize(a) - devectorize(b));
-}
 
 
 static __device__ __forceinline__ uint4 operator^ (uint4 a, uint4 b) { return make_uint4(a.x ^ b.x, a.y ^ b.y, a.z ^ b.z, a.w ^ b.w); }
@@ -761,6 +748,7 @@ __device__ __inline__ uint2 ROL24(const uint2 a)
 
 	return result;
 }
+
 
 
 #if  __CUDA_ARCH__ >= 350
