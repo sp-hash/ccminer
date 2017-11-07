@@ -6,16 +6,16 @@ If you find this tool useful and like to support its continued
           development, then consider a donation.
 
 KlausT @github:
-  BTC 1H2BHSyuwLP9vqt2p3bK9G3mDJsAi7qChw
+  BTC 1H6VRVMB6gPD7gfkp8zAEkPtXTPSoeJdXd
 
-tpruvot@github:
-  BTC donation address: 1AJdfCpLWPNoAMDfHF1wD5y8VgKSSTHxPo
+tpruvot@github:1H6VRVMB6gPD7gfkp8zAEkPtXTPSoeJdXd
+  BTC donation address: 
   DRK  : XeVrkPrWB7pDbdFLfKhF1Z3xpqhsx6wkH3
   NEOS : NaEcVrdzoCWHUYXb7X8QoafoKS9UV69Yk4
   XST  : S9TqZucWgT6ajZLDBxQnHUtmkotCEHn9z9
 
 sp-hash@github:
-  BTC: 1CTiNJyoUmbdMRACtteRWXhGqtSETYd6Vd
+  BTC: 
   DRK: XdgfWywdxABwMdrGUd2xseb6CYy1UKi9jX
   
 DJM34:
